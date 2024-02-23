@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @Table(name = "authorities")
 public class Authority {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

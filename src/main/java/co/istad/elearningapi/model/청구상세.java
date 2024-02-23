@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class BillDetail {
+public class 청구상세 {
     @Id
     private String use_intt_id;
     private String clm_ym;
@@ -20,6 +20,6 @@ public class BillDetail {
     private Integer item_amt;
     private Integer vat_amt;
     private Integer totl_amt;
-    @ManyToMany(mappedBy = "BillDetail")
-    List<AddPro>addPros;
+    @ManyToMany(mappedBy = "청구상세")
+    List<부가상폼ㅂ>부가상폼ㅂ;
 }

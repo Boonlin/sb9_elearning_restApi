@@ -1,2 +1,6 @@
-package co.istad.elearningapi.dto;public record AuthorityDto() {
+package co.istad.elearningapi.dto;
+
+public record AuthorityDto(
+
+) {
 }

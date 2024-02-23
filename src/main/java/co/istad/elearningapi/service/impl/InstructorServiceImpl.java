@@ -28,12 +28,11 @@ public class InstructorServiceImpl implements InstructorService {
     private final InstructorMapper instructorMapper;
     private final CategoryRepository categoryRepository;
 
-    private  <T> Predicate<T> distinctByKey(
-            Function<? super T, ?> keyExtractor) {
+    private <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
         Map<Object, Boolean> seen = new ConcurrentHashMap<>();
-        return t -> seen.putIfAbsent(keyExtractor.apply(t),
-                Boolean.TRUE) == null;
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
+
     @Override
     public List<InstructorDto> search(String familyName, String givenName, String biography) {
         List<Instructor> instructors = new ArrayList<>();
@@ -52,49 +51,34 @@ public class InstructorServiceImpl implements InstructorService {
             instructors.addAll(instructorByBiography);
         }
 
-        instructors = instructors.stream()
-                .filter(distinctByKey(Instructor::getId))
-                .toList();
+        instructors = instructors.stream().filter(distinctByKey(Instructor::getId)).toList();
 
         return instructorMapper.toInstructorListDto(instructors);
     }
 
     @Override
     public InstructorDto findByIdAndNationalIdCard(Integer id, String nationalIdCard) {
-        Instructor instructor = instructorRepository
-                .findByIdAndNationalIdCard(id, nationalIdCard)
-                .orElseThrow(() ->
-                        new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                "Instructor has not been found"));
+        Instructor instructor = instructorRepository.findByIdAndNationalIdCard(id, nationalIdCard).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor has not been found"));
         return instructorMapper.toInstructorDto(instructor);
     }
 
     @Override
     public InstructorDto findById(Integer id) {
-        Instructor instructor = instructorRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Instructor has not been found"
-                ));
+        Instructor instructor = instructorRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor has not been found"));
         return instructorMapper.toInstructorDto(instructor);
     }
 
     @Override
     public void deleteById(Integer id) {
         if (!instructorRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Instructor has not been found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor has not been found");
         }
         instructorRepository.deleteById(id);
     }
 
     @Override // Update partially
     public InstructorDto editById(Integer id, InstructorEditionDto instructorEditionDto) {
-        Instructor instructor = instructorRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Instructor has not been found"
-                ));
+        Instructor instructor = instructorRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Instructor has not been found"));
         instructorMapper.fromInstructorEditionDto(instructor, instructorEditionDto);
         instructorRepository.save(instructor);
 
@@ -103,8 +87,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public void createNew(InstructorCreationDto instructorCreationDto) {
-        Instructor instructor = instructorMapper
-                .fromInstructorCreationDto(instructorCreationDto);
+        Instructor instructor = instructorMapper.fromInstructorCreationDto(instructorCreationDto);
         // Save into db
         instructorRepository.save(instructor);
     }
@@ -116,7 +99,7 @@ public class InstructorServiceImpl implements InstructorService {
         List<Integer> idForRemove = List.of(6, 100);
 
         for (Integer id : idForRemove) {
-            categoryRepository.removeById(id);
+            categoryRepository.deleteById(id);
             if (id == 100) {
                 throw new RuntimeException("Id doesn't exist!");
             }

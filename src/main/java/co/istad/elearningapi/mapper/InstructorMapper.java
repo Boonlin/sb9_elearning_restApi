@@ -19,7 +19,6 @@ public interface InstructorMapper {
     List<InstructorDto> toInstructorListDto(List<Instructor> instructors);
 
     InstructorDto toInstructorDto(Instructor instructor);
-
     Instructor fromInstructorCreationDto(InstructorCreationDto instructorCreationDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
