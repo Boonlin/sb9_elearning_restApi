@@ -36,8 +36,6 @@ public class AuthController {
 
     @PostMapping("/login")
     Map<String, Object> login(@Valid @RequestBody LoginDto loginDto) {
-        JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder().id(loginDto.email()).audience(List.of("mobile", "web")).subject("Access Token").build();
-        String jwtToken = jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
-        return Map.of("token", jwtToken);
+        return authService.login(loginDto);
     }
 }

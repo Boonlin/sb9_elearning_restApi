@@ -1,5 +1,6 @@
 package co.istad.elearningapi.service.impl;
 
+import co.istad.elearningapi.dto.LoginDto;
 import co.istad.elearningapi.dto.RegisterDto;
 import co.istad.elearningapi.dto.UserCreationDto;
 import co.istad.elearningapi.dto.VerifyDto;
@@ -16,10 +17,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Map;
 @Service
 @RequiredArgsConstructor
@@ -28,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
     private final AuthRepository authRepository;
     private final JavaMailSender javaMailSender;
+    private final JwtEncoder jwtEncoder;
     @Value("${spring.mail.username}")
     private String adminMail;
 
@@ -59,5 +65,15 @@ public class AuthServiceImpl implements AuthService {
         user.setVerifiedCode(null);
         authRepository.save(user);
         return Map.of("message", "Your account has been verified", "email", verifyDto.email());
+    }
+
+    @Override
+    public Map<String, Object> login(LoginDto loginDto) {
+         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder().id(loginDto.email())
+                 .audience(List.of("mobile", "web"))
+                 .subject("Access Token")
+                 .build();
+        String jwtToken = jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet)).getTokenValue();
+        return Map.of("token", jwtToken);
     }
 }
