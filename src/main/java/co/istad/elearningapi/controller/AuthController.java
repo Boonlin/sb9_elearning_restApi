@@ -1,19 +1,13 @@
 package co.istad.elearningapi.controller;
 
-import co.istad.elearningapi.dto.LoginDto;
-import co.istad.elearningapi.dto.RegisterDto;
-import co.istad.elearningapi.dto.VerifyDto;
+import co.istad.elearningapi.dto.*;
 import co.istad.elearningapi.service.AuthService;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,7 +15,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-    private final JwtEncoder jwtEncoder;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
@@ -35,7 +28,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    Map<String, Object> login(@Valid @RequestBody LoginDto loginDto) {
+    AuthDto login(@Valid @RequestBody LoginDto loginDto) {
         return authService.login(loginDto);
     }
+    @PostMapping("/refresh")
+    AuthDto refresh(@Valid @RequestBody RefreshTokenDto refreshTokenDto){
+        return authService.refresh(refreshTokenDto);
+    }
+
 }

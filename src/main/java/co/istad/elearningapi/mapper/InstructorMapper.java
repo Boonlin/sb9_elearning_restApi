@@ -4,6 +4,7 @@ import co.istad.elearningapi.dto.InstructorCreationDto;
 import co.istad.elearningapi.dto.InstructorDto;
 import co.istad.elearningapi.dto.InstructorEditionDto;
 import co.istad.elearningapi.model.Instructor;
+import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
