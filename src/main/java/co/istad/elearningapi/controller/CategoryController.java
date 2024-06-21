@@ -3,6 +3,7 @@ package co.istad.elearningapi.controller;
 import co.istad.elearningapi.dto.CategoryCreationDto;
 import co.istad.elearningapi.dto.CategoryDto;
 import co.istad.elearningapi.service.CategoryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/categories")
 @RequiredArgsConstructor
+@SecurityRequirement(name="bearerAuth")
 public class CategoryController {
     private final CategoryService categoryService;
     @GetMapping

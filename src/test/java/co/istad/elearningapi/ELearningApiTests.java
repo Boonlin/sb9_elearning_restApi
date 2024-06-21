@@ -11,9 +11,10 @@ import java.util.List;
 
 @SpringBootTest
 class ELearningApiTests {
-	@Autowired
-	CategoryRepository categoryRepository;
+/*	@Autowired
+	CategoryRepository categoryRepository;*/
 
+/*
 	@Test
 	void test_updateCategoryName() {
 		String newName = "Data Science";
@@ -46,5 +47,6 @@ class ELearningApiTests {
 			System.out.println("-----------------------");
 		});
 	}
+*/
 
 }

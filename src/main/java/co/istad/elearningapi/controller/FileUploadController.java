@@ -2,6 +2,7 @@ package co.istad.elearningapi.controller;
 
 import co.istad.elearningapi.dto.FileDto;
 import co.istad.elearningapi.service.FileUploadService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/files")
 @RequiredArgsConstructor
+@SecurityRequirement(name="bearerAuth")
 public class FileUploadController {
     private final FileUploadService fileUploadService;
     @ResponseStatus(HttpStatus.CREATED)

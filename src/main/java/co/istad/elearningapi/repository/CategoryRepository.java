@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
+
     // Using JPQL
     //@Query(value = "SELECT * FROM categories", nativeQuery = true)
     @Query("SELECT cate FROM Category AS cate")

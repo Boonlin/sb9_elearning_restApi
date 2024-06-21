@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -47,6 +48,13 @@ public class UserServiceImpl implements UserService {
         });
         user.setRoles(roles);
         userRepository.save(user);
+    }
+
+    @Override
+    public List<UserCreationDto> findAllUserListByOrder() {
+        List<User> users = userRepository.findAll();
+
+        return userMapper.toUserListDto(users);
     }
 
 }

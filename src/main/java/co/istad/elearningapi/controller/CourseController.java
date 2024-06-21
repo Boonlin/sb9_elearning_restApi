@@ -4,6 +4,7 @@ import co.istad.elearningapi.dto.CourseCreationDto;
 import co.istad.elearningapi.dto.CourseDto;
 import co.istad.elearningapi.dto.CourseEditionDto;
 import co.istad.elearningapi.service.CourseService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/courses")
 @RequiredArgsConstructor
+@SecurityRequirement(name="bearerAuth")
 public class CourseController {
     private final CourseService courseService;
     @GetMapping

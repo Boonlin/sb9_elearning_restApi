@@ -39,7 +39,6 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-
     @Bean
     DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider dao = new DaoAuthenticationProvider();
@@ -102,7 +101,16 @@ JwtAuthenticationProvider jwtAuthenticationProvider (@Qualifier("jwtRefreshToken
     @Bean
     SecurityFilterChain apiFilterChain(HttpSecurity httpSecurity ,JwtAuthenticationConverter jwtAuthenticationConverter) throws Exception {
         // Your security logic
-        httpSecurity.authorizeHttpRequests(request -> request.requestMatchers("/api/v1/file/**").permitAll().requestMatchers("/api/v1/auth/**").permitAll().anyRequest().authenticated())
+        httpSecurity.authorizeHttpRequests(
+                        authorize -> authorize
+                                .requestMatchers("/api/v1/files/**").permitAll()
+                                .requestMatchers("/api/v1/roles/**").permitAll()
+                                .requestMatchers("/api/v1/users/**").permitAll()
+                                .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/v3/api-docs/**").permitAll() // Adjust this path if necessary
+                                .anyRequest().authenticated()
+                )
                 // security mechanism (username & password)
                 //.httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer( oauth2-> oauth2.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter)))

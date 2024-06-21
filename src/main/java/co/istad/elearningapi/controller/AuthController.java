@@ -2,6 +2,7 @@ package co.istad.elearningapi.controller;
 
 import co.istad.elearningapi.dto.*;
 import co.istad.elearningapi.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Tag(name = "Authentication")
 public class AuthController {
     private final AuthService authService;
 

@@ -4,6 +4,7 @@ import co.istad.elearningapi.dto.InstructorCreationDto;
 import co.istad.elearningapi.dto.InstructorDto;
 import co.istad.elearningapi.dto.InstructorEditionDto;
 import co.istad.elearningapi.service.InstructorService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/instructors")
 @RequiredArgsConstructor
+@SecurityRequirement(name="bearerAuth")
 public class InstructorController {
     private final InstructorService instructorService;
     @GetMapping("/search")

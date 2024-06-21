@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -70,7 +71,7 @@ public class AuthServiceImpl implements AuthService {
         authRepository.updateVerifiedCode(registerDto.email(), sixDigits);
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-        mimeMessageHelper.setSubject(" Account Verification");
+        mimeMessageHelper.setSubject(" Hello Bong Srey Vanda");
         mimeMessageHelper.setText(sixDigits);
         mimeMessageHelper.setTo(registerDto.email());
         mimeMessageHelper.setFrom(adminMail);
